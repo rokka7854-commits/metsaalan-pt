@@ -1,0 +1,26 @@
+{
+  "name": "Metsäalan PT – Näytön arviointi",
+  "short_name": "Metsäalan PT",
+  "description": "Metsäkoneenkuljetuksen osaamisalan näyttöjen arviointi.",
+  "lang": "fi",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5f8fb",
+  "theme_color": "#0b3b5f",
+  "icons": [
+    {
+      "src": "icons/metsaalan-pt-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/metsaalan-pt-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "id": "./"
+}

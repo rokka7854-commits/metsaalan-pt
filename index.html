@@ -1,0 +1,655 @@
+<!doctype html>
+<html lang="fi">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#0b3b5f">
+  <meta name="application-name" content="Metsäalan PT"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icons/metsaalan-pt-192.png">
+  <title>Metsäalan PT – Näytön arviointi</title>
+  <style>
+    :root{--navy:#0b3b5f;--blue:#0b5fa5;--ink:#102a43;--muted:#627d98;--line:#d9e2ec;--paper:#f5f8fb;--soft:#eaf4fc;--green:#176342;--radius:15px}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}.top{min-height:69px;padding:10px 32px;display:flex;align-items:center;justify-content:space-between;gap:18px;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}.brand{display:flex;align-items:center;gap:10px;font-weight:800}.mark{display:grid;place-items:center;width:31px;height:31px;border-radius:9px;background:var(--navy);color:#fff}.steps{display:flex;gap:12px}.step{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:13px;font-weight:750}.step i{display:grid;place-items:center;width:23px;height:23px;border:1px solid #b8c7d6;border-radius:50%;font-style:normal;font-size:12px}.step.active{color:var(--blue)}.step.active i{background:var(--blue);border-color:var(--blue);color:#fff}.step.done{color:var(--green)}.step.done i{background:#e8f5ee;border-color:#55b782}.top-right{display:flex;align-items:center;gap:15px}.link-button{border:0;background:transparent;color:var(--blue);font-size:13px;font-weight:750}.save{display:flex;align-items:center;gap:8px;color:var(--green);font-size:12px;font-weight:700}.save i{width:9px;height:9px;border-radius:50%;background:#23a36a}.stage{max-width:1180px;margin:auto;padding:38px 32px 70px}.screen{display:none}.screen.active{display:block}.setup{max-width:860px;margin:auto}.setup h1{margin:0;font-size:32px;line-height:1.15;letter-spacing:-.04em}.lead{margin:8px 0 25px;color:var(--muted)}.note{max-width:860px;margin:0 auto 20px;padding:12px 14px;border:1px solid #c9def0;border-radius:12px;background:#edf7ff;color:#245375;font-size:14px}.note b{margin-right:7px;color:var(--blue)}.panel,.report-card{padding:26px;border:1px solid var(--line);border-radius:var(--radius);background:#fff;box-shadow:0 3px 14px #102a4308}.panel h2,.report-card h2{margin:0 0 16px;font-size:19px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field label{display:block;margin-bottom:6px;color:#486581;font-size:13px;font-weight:750}.field input,.field select{width:100%;padding:11px 12px;border:1px solid #cbd7e2;border-radius:9px;background:#fff}.field input:focus,.field select:focus,.final-grade:focus,.notes textarea:focus{outline:3px solid #b9def9;border-color:var(--blue)}.subhead{margin:22px 0 9px;color:#486581;font-size:14px;font-weight:750}.paths{display:grid;grid-template-columns:1fr 1fr;gap:12px}.path:last-child{grid-column:1/-1}.path{position:relative;padding:17px 17px 16px 48px;border:1px solid #cbd7e2;border-radius:12px;background:#fff;text-align:left}.path:hover{border-color:#87c5ee}.path.selected{background:var(--soft);border-color:var(--blue);box-shadow:inset 0 0 0 1px var(--blue)}.radio{position:absolute;left:16px;top:20px;width:18px;height:18px;border:2px solid #8aa2b6;border-radius:50%}.selected .radio{border:5px solid var(--blue)}.path b,.choice b{display:block}.path span,.choice span{display:block;margin-top:3px;color:var(--muted);font-size:13px}.actions{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:24px}.hint,.count{color:var(--muted);font-size:13px}.primary,.secondary,.danger{padding:12px 17px;border-radius:10px;font-weight:800}.primary{border:0;background:var(--blue);color:#fff;box-shadow:0 3px 8px #0b5fa536}.secondary{border:1px solid #b9cbdc;background:#fff;color:#1f4b6e}.danger{border:1px solid #e5b6b6;background:#fff;color:#a42d2d}.selection-summary{margin-bottom:18px;padding:14px 16px;border-left:4px solid var(--blue);border-radius:9px;background:var(--soft)}.selection-summary b{display:block}.selection-summary span{color:#486581;font-size:13px}.groups{display:grid;gap:14px}.group{overflow:hidden;border:1px solid var(--line);border-radius:13px;background:#fff}.group-title{width:100%;display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border:0;background:#fbfdff;color:var(--ink);text-align:left;font-weight:750}.group-title span{color:var(--muted);font-size:13px;font-weight:500}.group-title i{font-style:normal;color:var(--blue)}.group-body{display:block}.group.closed .group-body{display:none}.choice{display:flex;gap:12px;padding:14px 16px;border-top:1px solid #edf1f5;background:#fff}.choice input{width:18px;height:18px;margin-top:3px;accent-color:var(--blue)}
+    .evaluation{display:grid;grid-template-columns:258px minmax(0,1fr);min-height:calc(100vh - 69px);margin:-38px -32px -70px}.side{padding:25px 16px;background:#fff;border-right:1px solid var(--line)}.qualification{margin-bottom:24px;padding:12px;border:1px solid var(--line);border-radius:12px;background:#fbfdff;font-size:13px}.qualification b{display:block}.qualification span{color:var(--muted);font-size:12px}.label{display:block;margin:0 9px 9px;color:var(--muted);font-size:12px;font-weight:750;letter-spacing:.055em;text-transform:uppercase}.modules{display:grid;gap:5px}.module{display:grid;grid-template-columns:9px 1fr auto;gap:9px;align-items:center;width:100%;padding:11px 9px;border:0;border-radius:10px;background:transparent;color:var(--ink);text-align:left;font-size:13px}.module.active{background:var(--soft);color:var(--navy);font-weight:750}.dot{width:9px;height:9px;border-radius:50%;background:#f2a125}.dot.done{background:#24a36c}.module small{color:var(--muted);font-size:11px}.main{min-width:0}.crumb{padding:17px 38px 0;color:var(--muted);font-size:14px}.crumb b{color:var(--ink)}.content{max-width:990px;margin:auto;padding:26px 38px 70px}.title-row{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:25px}.title-row h1{margin:0;font-size:29px;line-height:1.16;letter-spacing:-.035em}.sub{margin:7px 0 0;color:var(--muted)}.progress-box{min-width:155px;padding:11px 14px;border-left:4px solid var(--blue);border-radius:8px;background:#fff;box-shadow:0 2px 10px #102a4309}.progress-box b{display:block;font-size:17px}.progress-box span{color:var(--muted);font-size:12px}.eval-grid{display:grid;grid-template-columns:minmax(0,1fr) 225px;gap:22px}.context{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;overflow:hidden;border:1px solid var(--line);border-radius:var(--radius);background:var(--line)}.context div{padding:13px 14px;background:#fff}.context span{display:block;color:var(--muted);font-size:12px}.context b{display:block;margin-top:3px;font-size:13px}.criteria{display:grid;gap:13px;margin-top:18px}.criterion{padding:18px;border:1px solid var(--line);border-radius:var(--radius);background:#fff;box-shadow:0 2px 10px #102a4308}.criterion-head{display:flex;gap:12px;align-items:flex-start}.bullet{flex:0 0 12px;color:var(--blue);font-size:24px;line-height:.85}.criterion h2{margin:1px 0 0;font-size:16px;line-height:1.35}.grading{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding-top:14px;margin-top:14px;border-top:1px solid #edf1f5}.grading label{margin-right:4px;color:var(--muted);font-size:13px;font-weight:750}.grade{width:37px;height:34px;border:1px solid #c6d4e1;border-radius:9px;background:#fff;color:#334e68;font-weight:800}.grade.selected{border-color:var(--blue);background:var(--blue);color:#fff}.notes{margin-top:18px;padding:17px;border:1px solid var(--line);border-radius:var(--radius);background:#fff}.notes label{display:block;margin-bottom:7px;color:#486581;font-size:13px;font-weight:800}.notes textarea{width:100%;min-height:100px;padding:11px 12px;border:1px solid #cbd7e2;border-radius:9px;resize:vertical}.quicknav{position:sticky;top:88px;padding:17px;border:1px solid var(--line);border-radius:var(--radius);background:#fff}.quicknav h3{margin:0;font-size:15px}.quicknav p{margin:4px 0 13px;color:var(--muted);font-size:12px}.quick{display:block;width:100%;padding:10px 8px;border:1px solid transparent;border-radius:9px;background:#fff;color:#334e68;text-align:left;font-size:13px}.quick.current{border-color:#a9d4f3;background:var(--soft);color:var(--navy);font-weight:750}.quick small{display:block;margin-top:2px;color:var(--muted);font-size:11px;font-weight:500}.quicknav hr{margin:16px 0;border:0;border-top:1px solid var(--line)}.nextprev{display:grid;grid-template-columns:1fr 1fr;gap:7px}.nextprev button{padding:8px 5px;border:1px solid #b9cbdc;border-radius:9px;background:#fff;color:#1f4b6e;font-size:12px;font-weight:750}.nextprev button:last-child{border-color:var(--blue);background:var(--blue);color:#fff}.module-grade{margin-top:22px;padding:17px;border:1px solid #bdd8ee;border-radius:var(--radius);background:#f7fbfe}.module-grade label{display:block;margin-bottom:6px;color:#245375;font-size:13px;font-weight:800}.final-grade{width:100%;max-width:230px;padding:10px;border:1px solid #96b8d3;border-radius:9px;background:#fff}.eval-finish{margin-top:23px;display:flex;justify-content:flex-end}.mobile-parts{display:none}.grade-table{width:100%;border-collapse:collapse}.grade-table th,.grade-table td{padding:12px;border-bottom:1px solid #e8eef4;text-align:left}.grade-table th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.04em}.grade-table select{padding:8px;border:1px solid #bfd0df;border-radius:8px;background:#fff;color:var(--blue);font-weight:800}.signatures{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}.signature{padding:15px;border:1px solid var(--line);border-radius:12px;background:#fbfdff}.signature b{display:block;font-size:14px}.signature span{display:block;min-height:20px;margin:2px 0 10px;color:var(--muted);font-size:12px}.signature canvas{display:block;width:100%;height:116px;border:1px dashed #8ca5b7;border-radius:8px;background:#fff;touch-action:none}.signature label{display:block;margin-top:13px;color:var(--muted);font-size:12px}.signature .date{width:100%;margin-top:3px;padding:8px 0;border:0;border-bottom:1px solid #8ca5b7;background:transparent}.sig-clear{margin-top:8px;padding:0;border:0;background:transparent;color:var(--blue);font-size:12px;font-weight:750}.report-notes{margin-top:24px;padding:26px;border:1px solid var(--line);border-radius:var(--radius);background:#fff;box-shadow:0 3px 14px #102a4308}.report-notes h2{margin:0 0 16px;font-size:19px}.report-note{padding:14px 0;border-top:1px solid #e8eef4;white-space:pre-wrap}.report-note:first-child{border-top:0}.report-note h3{margin:0 0 6px;font-size:15px}.report-note p{margin:0;color:#334e68}.report-actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin-top:22px}.report-actions button{display:inline-flex;align-items:center;gap:8px}.toast{position:fixed;right:22px;bottom:22px;z-index:10;display:none;padding:12px 15px;border-radius:10px;background:#173f5d;color:#fff;box-shadow:0 8px 22px #102a4350;font-size:14px}.toast.show{display:block}.empty{padding:30px;text-align:center;color:var(--muted)}
+    @media(max-width:950px){.evaluation{grid-template-columns:1fr}.side,.quicknav{display:none}.content{padding:25px 24px 84px}.crumb{padding:16px 24px 0}.mobile-parts{display:block;position:fixed;right:18px;bottom:16px;z-index:3;padding:12px 16px;border:0;border-radius:999px;background:var(--navy);color:#fff;box-shadow:0 8px 22px #102a4350;font-weight:750}}@media(max-width:650px){.top{padding:9px 16px}.brand{font-size:14px}.steps{gap:5px}.step{font-size:0}.step i{font-size:12px}.top-right .link-button{display:none}.save{font-size:0}.stage{padding:25px 16px 65px}.setup h1{font-size:27px}.panel,.report-card,.report-notes{padding:19px}.fields,.paths,.signatures{grid-template-columns:1fr}.path:last-child{grid-column:auto}.actions{align-items:stretch;flex-direction:column-reverse}.actions .primary,.actions .secondary{width:100%}.report-actions{width:100%;flex-direction:column-reverse}.report-actions button{width:100%;justify-content:center}.evaluation{margin:-25px -16px -65px}.content{padding:20px 16px 82px}.crumb{padding:14px 16px 0}.title-row{display:block}.title-row h1{font-size:25px}.progress-box{display:inline-block;margin-top:16px}.context{grid-template-columns:1fr}.criterion{padding:16px}.grading label{width:100%}.grade{flex:1;min-width:32px}}@media print{.top,.actions,.eval-finish,.mobile-parts,.toast,.sig-clear,.screen-average{display:none!important}.screen{display:none!important}.screen.active{display:block!important}.stage{padding:0}.setup{max-width:none}.report-card,.report-notes{border:0;box-shadow:none}.report-notes{break-before:page;page-break-before:always;margin-top:0}.signature canvas{border:0;border-bottom:1px solid #555}.signature{break-inside:avoid}}
+    .report-assessments{margin-top:24px;padding:26px;border:1px solid var(--line);border-radius:var(--radius);background:#fff;box-shadow:0 3px 14px #102a4308}.report-assessments h2{margin:0 0 16px;font-size:19px}.report-assessment{padding:18px 0;border-top:1px solid #e8eef4;break-inside:avoid}.report-assessment:first-child{padding-top:0;border-top:0}.report-assessment h3{margin:0 0 10px;font-size:16px}.report-assessment ol{margin:0;padding-left:22px}.report-assessment li{display:flex;justify-content:space-between;gap:16px;padding:7px 0;border-bottom:1px solid #f0f4f7}.report-assessment li span{flex:1}.report-assessment li b{color:var(--blue)}.notes textarea{min-height:210px}.eval-grid>.notes{grid-column:1/-1}.eval-finish{display:flex;justify-content:space-between;gap:14px}.mobile-module-panel{display:none}@media(max-width:950px){.mobile-module-panel.open{position:fixed;inset:0;z-index:20;display:block;background:#102a4366}.mobile-module-sheet{position:absolute;right:0;bottom:0;left:0;max-height:78vh;padding:20px 16px 28px;overflow:auto;border-radius:20px 20px 0 0;background:#fff;box-shadow:0 -10px 35px #102a4340}.mobile-module-sheet header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.mobile-module-sheet h2{margin:0;font-size:18px}.mobile-module-close{padding:8px 10px;border:0;border-radius:8px;background:var(--soft);color:var(--navy);font-weight:800}.mobile-module-choice{display:flex;width:100%;gap:10px;align-items:center;padding:14px 8px;border:0;border-bottom:1px solid #e8eef4;background:#fff;color:var(--ink);text-align:left}.mobile-module-choice.active{background:var(--soft);color:var(--navy);font-weight:800}.mobile-module-choice small{margin-left:auto;color:var(--muted)}}@media(max-width:650px){.eval-finish{align-items:stretch;flex-direction:column-reverse}.eval-finish button{width:100%}}@media print{.mobile-module-panel{display:none!important}.report-assessments{break-before:page;page-break-before:always;margin-top:0;border:0;box-shadow:none}.report-assessment{break-inside:auto}.report-assessment li{break-inside:avoid}}
+    @media(min-width:651px) and (max-width:950px){.evaluation{grid-template-columns:210px minmax(0,1fr)}.side{display:block;padding:20px 10px}.quicknav,.mobile-parts{display:none}.content{padding:24px 20px 70px}.crumb{padding:16px 20px 0}.module{padding:10px 6px;font-size:12px}.qualification{margin-bottom:16px}}
+    @media(max-width:950px){.eval-grid{grid-template-columns:minmax(0,1fr)}}
+    @media(max-width:650px){.criteria{margin-right:-16px;margin-left:-16px}.criterion{border-right:0;border-left:0;border-radius:0;box-shadow:none}}
+    .criterion .bullet{display:none}.start-actions{display:flex;align-items:center;gap:10px}@media(max-width:650px){.start-actions{display:grid;width:100%;gap:10px}.start-actions button{width:100%}}
+    .completion{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding-top:14px;margin-top:14px;border-top:1px solid #edf1f5}.completion label{margin-right:4px;color:var(--muted);font-size:13px;font-weight:750}.completion-choice{min-height:34px;padding:7px 10px;border:1px solid #c6d4e1;border-radius:9px;background:#fff;color:#334e68;font-size:13px;font-weight:800}.completion-choice.completed.selected{border-color:#176342;background:#176342;color:#fff}.completion-choice.not-completed.selected{border-color:#a42d2d;background:#a42d2d;color:#fff}.completion-choice.na.selected{border-color:#627d98;background:#627d98;color:#fff}
+    .demonstration-method,.assessment-scale,.report-scale{margin-top:18px;padding:18px;border:1px solid #bdd8ee;border-radius:var(--radius);background:#f7fbfe}.demonstration-method h2,.report-demonstration h4,.report-scale h2{margin:0 0 8px;font-size:16px}.demonstration-method p,.report-demonstration p{margin:0;color:#334e68}.assessment-scale{padding:0;background:#fff;border-color:var(--line)}.assessment-scale summary{padding:15px 17px;color:var(--blue);cursor:pointer;font-weight:800}.assessment-scale>div{padding:0 17px 17px;border-top:1px solid #e8eef4}.assessment-scale h2{margin:14px 0 6px;font-size:16px}.scale-table{width:100%;border-collapse:collapse;font-size:14px}.scale-table th,.scale-table td{padding:10px 8px;border-top:1px solid #e8eef4;vertical-align:top;text-align:left}.scale-table th{width:130px;color:#245375}.scale-table ul{margin:0;padding-left:18px}.report-demonstration{margin-top:13px;padding:12px 14px;border-left:3px solid #6aaed6;background:#f7fbfe}.report-scale{break-before:page;page-break-before:always}.report-scale .scale-table{font-size:13px}.report-final.missing{border:2px solid #b42318;background:#fff6f5;color:#8b1e17}.report-final.missing:focus{outline-color:#f7b1ad}.assessment-acknowledgement{margin:12px 0 13px;padding:11px 12px;border:1px solid #bdd8ee;border-radius:9px;background:#f7fbfe}.assessment-acknowledgement label{display:flex;gap:9px;align-items:flex-start;margin:0;color:#245375;font-size:12px;line-height:1.4}.assessment-acknowledgement input{flex:0 0 auto;width:18px;height:18px;margin:0;accent-color:var(--blue)}.assessment-acknowledgement a{display:inline-block;margin-top:8px;color:var(--blue);font-size:12px;font-weight:750}.assessment-acknowledgement input:focus-visible{outline:3px solid #b9def9;outline-offset:2px}@media(max-width:650px){.demonstration-method{border-right:0;border-left:0;border-radius:0}.assessment-scale{margin-right:-16px;margin-left:-16px;border-right:0;border-left:0;border-radius:0}.scale-table th{width:104px}.scale-table th,.scale-table td{padding:9px 6px}}
+  </style>
+</head>
+<body>
+  <header class="top"><div class="brand"><span class="mark">M</span><span>Metsäalan PT</span></div><div class="steps"><span class="step active" data-step="1"><i>1</i>Tiedot</span><span class="step" data-step="2"><i>2</i>Tutkinnon osat</span><span class="step" data-step="3"><i>3</i>Arviointi</span><span class="step" data-step="4"><i>4</i>Yhteenveto</span></div><div class="top-right"><button class="link-button" id="shareApp" type="button">↗ Jaa sovellus</button><div class="save"><i></i><span id="saveText">Tallennettu tälle laitteelle</span></div></div></header>
+  <main class="stage">
+    <section class="screen active" id="screen1"><div class="note"><b>Tietosuojahuomautus</b>Älä kirjaa sovellukseen näytön suorittajan nimeä, henkilötunnusta, terveystietoja tai muuta arkaluontoista tietoa.</div><div class="setup"><h1>Aloita näytön arviointi</h1><p class="lead">Kirjaa näytön perustiedot.</p><div class="panel"><h2>Näytön tiedot</h2><div class="fields"><div class="field"><label for="demoId">Näytön tunniste</label><input id="demoId" placeholder="Esim. Näyttö 2026-01" autocomplete="off"></div><div class="field"><label for="place">Näyttöpaikka ja yritys</label><input id="place" placeholder="Esim. TTS, Vantaa / Yritys Oy"></div><div class="field"><label for="schoolName">Oppilaitoksen edustajan nimi</label><input id="schoolName" placeholder="Kirjoita nimi" autocomplete="name"></div><div class="field"><label for="workName">Työelämän / oppilaitoksen edustajan nimi</label><input id="workName" placeholder="Kirjoita nimi" autocomplete="name"></div><div class="field"><label for="date">Arviointipäivä</label><input id="date" type="date"></div></div><p class="subhead">Osaamisala</p><div class="paths"><button class="path selected" type="button" data-path="forest"><span class="radio"></span><b>Metsäkoneenkuljetuksen osaamisala</b></button></div></div><div class="actions"><span class="hint">Tiedot tallentuvat tälle laitteelle, kunnes päätät näytön.</span><button class="primary" type="button" data-next="2">Jatka tutkinnon osiin →</button></div></div></section>
+    <section class="screen" id="screen2"><div class="setup"><h1>Valitse tutkinnon osat</h1><p class="lead">Valitse tämän näytön tutkinnon osat. Ryhmät voi avata ja sulkea.</p><div class="selection-summary"><b id="selectedPath">Metsäkoneenkuljetuksen osaamisala</b><span id="selectionInfo">Metsäalan perustutkinto</span></div><div class="groups" id="partGroups"></div><p class="count"><span id="selectedCount">0</span> tutkinnon osaa valittu</p><div class="actions"><button class="secondary" type="button" data-back="1">← Takaisin tietoihin</button><button class="primary" id="toEvaluation" type="button">Siirry arviointiin →</button></div></div></section>
+    <section class="screen" id="screen3"><div class="evaluation"><aside class="side"><div class="qualification"><b>Metsäalan perustutkinto</b><span id="sidePath"></span></div><span class="label">Valitut tutkinnon osat</span><nav class="modules" id="moduleList"></nav></aside><div class="main"><div class="crumb"><b>Arviointi</b> / Metsäalan perustutkinto</div><div class="content"><div id="evaluationContent"></div><button class="mobile-parts" id="mobileModules">☰ Tutkinnon osat</button></div></div></div></section>
+    <section class="screen" id="screen4"><div class="setup"><h1>Näytön arvioinnin yhteenveto</h1><p class="lead">Vahvista tutkinnon osien arvosanat ja piirrä allekirjoitukset ennen raportin tallentamista.</p><div class="report-card"><h2>Tutkinnon osien arvosanat</h2><table class="grade-table"><thead><tr><th>Tutkinnon osa</th><th>Laajuus</th><th>Arvosana</th></tr></thead><tbody id="reportGrades"></tbody></table><h2 style="margin-top:28px">Allekirjoitukset</h2><div class="signatures"><div class="signature"><b>Oppilaitoksen edustaja</b><span id="reportSchoolName">Nimi puuttuu</span><canvas id="sigSchool" aria-label="Oppilaitoksen edustajan allekirjoitus"></canvas><button class="sig-clear" data-clear="sigSchool" type="button">Tyhjennä allekirjoitus</button><label>Allekirjoituspäivä</label><input class="date" id="sigSchoolDate" type="date"></div><div class="signature"><b>Työelämän / oppilaitoksen edustaja</b><span id="reportWorkName">Nimi puuttuu</span><canvas id="sigWork" aria-label="Työelämän edustajan allekirjoitus"></canvas><button class="sig-clear" data-clear="sigWork" type="button">Tyhjennä allekirjoitus</button><label>Allekirjoituspäivä</label><input class="date" id="sigWorkDate" type="date"></div><div class="signature"><b>Opiskelija</b><span>Allekirjoitus</span><canvas id="sigStudent" aria-label="Opiskelijan allekirjoitus"></canvas><button class="sig-clear" data-clear="sigStudent" type="button">Tyhjennä allekirjoitus</button><label>Allekirjoituspäivä</label><input class="date" id="sigStudentDate" type="date"></div></div></div><section class="report-notes" id="reportNotes" hidden><h2>Huomiot</h2><div id="reportNotesContent"></div></section><section class="report-scale" id="reportScale"></section><div class="actions"><button class="secondary" type="button" data-back="3">← Palaa arviointiin</button><div class="report-actions"><button class="danger" id="clearAll" type="button">Päätä näyttö ja tyhjennä tiedot</button><button class="secondary" id="shareReport" type="button">↗ Jaa raportti</button><button class="primary" id="saveReport" type="button">↓ Tulosta / tallenna PDF</button></div></div></div></section>
+  </main><div class="toast" id="toast" role="status"></div>
+  <script src="jspdf.umd.min.js"></script>
+  <script src="pdf-fonts.js"></script>
+  <script>
+  const PARTS={
+  "forest": {
+    "name": "Metsäkoneenkuljetuksen osaamisala",
+    "required": [
+      [
+        "Kestävä metsän hoito ja hyödyntäminen",
+        25
+      ],
+      [
+        "Metsätraktorin käyttö",
+        20
+      ],
+      [
+        "Työkoneiden kunnossapito",
+        15
+      ],
+      [
+        "Koneellinen puutavaran valmistus",
+        65
+      ],
+      [
+        "Puutavaran lähikuljetus",
+        65
+      ],
+      [
+        "Puuterminaalityöt (oppisopimus)",
+        65
+      ],
+      [
+        "Koneelliset maanmuokkaus- ja metsähoitotyöt (oppisopimus)",
+        65
+      ]
+    ],
+    "optional": [
+      [
+        "Metsien monikäyttö",
+        10
+      ],
+      [
+        "Metsänhoito- ja maanmuokkauskoneen käyttö",
+        10
+      ],
+      [
+        "Metsänhoitopalvelut (oppisopimus)",
+        30
+      ],
+      [
+        "Metsäkoneen huolto ja korjaus (oppisopimus)",
+        40
+      ],
+      [
+        "Metsäkoneen vianhaku (oppisopimus)",
+        35
+      ]
+    ]
+  }
+};
+  const CRITERIA={
+  "Kestävä metsän hoito ja hyödyntäminen": [
+    "tietää metsäalan organisaatioita, järjestöjä ja palveluntarjoajia",
+    "tietää metsälainsäädännön yleiset periaatteet",
+    "tietää keskeiset metsän eri käyttömuodot",
+    "tietää kestävän metsänkasvatuksen perusteet",
+    "tietää metsänhoidon suositukset",
+    "tietää metsäsertifiointien vaikutukset metsänkäsittelyyn",
+    "osaa lukea karttaa",
+    "tekee omavalvontaa",
+    "tuntee metsäekologian perusteet",
+    "tietää metsämaan luokituksen",
+    "tunnistaa yleisimmät kotimaiset puulajit",
+    "tunnistaa alueensa opaskasveja ja kasvupaikkatyyppejä",
+    "tunnistaa metsien kehitysluokat",
+    "tietää erilaisten elinympäristöjen, vesiensuojelun ja maiseman hoidon merkityksen kestävässä metsätaloudessa",
+    "huomioi luonnon monimuotoisuutta työtehtävissään",
+    "ymmärtää metsien merkityksen hiilensidonnassa ja ilmastoon vaikuttavana tekijänä",
+    "tietää eri uudistamismenetelmät",
+    "käsittelee ja huoltaa viljelymateriaaleja ohjeiden mukaisesti",
+    "käyttää käyttökohteeseen sopivia työvälineitä",
+    "istuttaa puulajille sopivaan tavoitetiheyteen ja sopivaan viljelykohtaan",
+    "tekee varhaishoidon töitä",
+    "perkaa taimikoita",
+    "harventaa taimikon annetun ohjeen mukaiseen tiheyteen",
+    "käyttää raivaussahaa",
+    "tekee raivaussahan päivittäisen huollot",
+    "määrittää metsiköstä pohjapinta-alan, runkoluvun ja tilavuuden sekä soveltaa tietoja metsänkäsittelyssä",
+    "harventaa ensiharvennuspuuston työmaaohjeen mukaiseen tiheyteen runkoluvun ja harvennusmallien mukaisesti",
+    "valmistaa mitta- ja laatuvaatimukset täyttävää puutavaraa",
+    "käyttää moottorisahaa",
+    "tekee moottorisahan päivittäiset huollot",
+    "noudattaa ohjeita ja työturvallisuuteen liittyviä määräyksiä",
+    "käyttää ja huoltaa työvälineitä turvallisesti",
+    "työskentelee ergonomisesti",
+    "käyttää ja huoltaa työssä tarvittavia henkilökohtaisia suojavarusteita",
+    "huolehtii jätteiden lajittelusta ja pyrkii vähentämään jätteiden määrää",
+    "käsittelee työssä tarvittavia kemikaaleja ohjeiden mukaisesti",
+    "ehkäisee toiminnallaan tapaturmia",
+    "osaa toimia hätätilanteessa sekä onnettomuuden ja sairauskohtauksen sattuessa",
+    "hallitsee ensiavun antamisen perusteet ensiapua vaativissa tilanteissa"
+  ],
+  "Metsätraktorin käyttö": [
+    "käyttää kuormainta puutavaran kuormaamiseen ja purkamiseen",
+    "säätää koneen istuimen työskentelyasennon",
+    "suunnittelee ajo- ja varastojärjestyksen",
+    "tuntee puutavaralajit ja niiden laatuvaatimukset",
+    "työskentelee metsätraktorilla taloudellisesti normaaleissa maasto-olosuhteissa",
+    "hyödyntää monilajikuormia",
+    "tuntee metsätraktorin perusrakenteen",
+    "huoltaa konetta",
+    "ylläpitää koneen toimintakuntoa",
+    "ilmoittaa havaitsemistaan huolto- ja korjaustarpeista",
+    "ymmärtää päivittäisten huoltojen ja tarkastusten merkityksen",
+    "noudattaa ohjeita ja työturvallisuuteen liittyviä määräyksiä",
+    "käyttää ja huoltaa työvälineitä turvallisesti",
+    "työskentelee ergonomisesti",
+    "käyttää ja huoltaa työssä tarvittavia henkilökohtaisia suojavarusteita",
+    "huolehtii työmaan siisteydestä",
+    "huolehtii jätteiden lajittelusta ja pyrkii vähentämään jätteiden määrää",
+    "käsittelee työssä tarvittavia kemikaaleja ohjeiden mukaisesti",
+    "havainnoi ja arvioi työhönsä liittyviä turvallisuusriskejä",
+    "toimii alkusammutustilanteessa ohjeiden mukaisesti",
+    "ehkäisee toiminnallaan tapaturmia",
+    "osaa toimia hätätilanteessa sekä onnettomuuden ja sairauskohtauksen sattuessa",
+    "hallitsee ensiavun antamisen perusteet ensiapua vaativissa tilanteissa"
+  ],
+  "Työkoneiden kunnossapito": [
+    "tekee huoltokirjojen ja käyttöohjeiden mukaiset tavanomaiset huoltotyöt",
+    "määrittää tavanomaisimmat toimintahäiriöt hyödyntämällä vianetsintäjärjestelmää, käyttöohjekirjaa ja kytkentäkaavioita",
+    "käsittelee työkaluja tarkoituksenmukaisesti",
+    "tietää työkoneen moottorin rakenteen ja toimintaperiaatteen sekä moottorin eri järjestelmät",
+    "tietää työkoneen automaatio-, hydrauliikka-, sähkö- ja mekaaniset järjestelmät",
+    "lukee kytkentäkaavioita",
+    "valitsee poltto- ja voiteluaineet käyttökohteen ja -luokitusten mukaisesti",
+    "noudattaa ohjeita ja työturvallisuuteen liittyviä määräyksiä",
+    "käyttää ja huoltaa työvälineitä turvallisesti",
+    "työskentelee ergonomisesti",
+    "käyttää ja huoltaa työssä tarvittavia henkilökohtaisia suojavarusteita",
+    "huolehtii työkohteen siisteydestä",
+    "huolehtii jätteiden lajittelusta ja pyrkii vähentämään jätteiden määrää",
+    "käsittelee työssä tarvittavia kemikaaleja ohjeiden mukaisesti",
+    "havainnoi ja arvioi työhönsä liittyviä työturvallisuusriskejä",
+    "toimii alkusammutustilanteessa ohjeiden mukaisesti",
+    "ehkäisee toiminnallaan tapaturmia",
+    "osaa toimia hätätilanteessa sekä onnettomuuden ja sairauskohtauksen sattuessa",
+    "hallitsee ensiavun antamisen perusteet ensiapua vaativissa tilanteissa"
+  ],
+  "Koneellinen puutavaran valmistus": [
+    "tiedostaa oman työnsä kustannusvaikutukset ja tuotostason",
+    "toimii työyhteisössä vuorovaikutteisesti ja kehittävästi",
+    "huomioi toiminnassaan metsänomistajien erilaiset tavoitteet metsän käsittelyssä",
+    "paikantaa työkohteet kartoilla ja GPS-pohjaisilla välineillä",
+    "työskentelee asiakaslähtöisesti ja yrittäjämäisesti vaitiolovelvollisuuden huomioiden",
+    "noudattaa sovittuja työaikoja",
+    "suunnittelee työtehtävät huomioiden vuorotyön vaatimukset",
+    "suunnittelee hakkuukoneen puunkorjuutyömaan huomioiden koko korjuuketjun",
+    "käyttää harvennusmalleja",
+    "työskentelee hakkuukoneella korjuuohjeiden, metsän- ja luonnonhoidon suositusten, säädösten sekä metsäsertifioinnin kriteerien ja kestävän kehityksen ohjeistusten mukaisesti",
+    "tunnistaa talousmetsien arvokkaat elinympäristöt ja niiden ominaispiirteet",
+    "huomioi vesiensuojelun vaatimukset työkohteella",
+    "käyttää eri tilanteisiin soveltuvia hakkuutapoja",
+    "tiedostaa energiatehokkaan toiminnan vaikutuksen korjuuketjussa",
+    "huolehtii työkohteen aloittamiseen ja lopettamiseen kuuluvista tehtävistä",
+    "huolehtii työvuoron aloittamiseen ja lopettamiseen kuuluvista tehtävistä",
+    "käyttää koneen tietotekniikkaa ja sovelluksia",
+    "käyttää mittalaitetta",
+    "kalibroi ja virittää mittalaitteen",
+    "tekee omavalvontaa",
+    "tietää korjuujäljen arvioinnin kriteerit",
+    "dokumentoi työaikojaan, työn laatua ja määrää",
+    "käyttää kasvinsuojeluaineita ohjeiden mukaisesti",
+    "varustelee ja säätää koneen toiminnot siten, että työskentely on sujuvaa ja tuottavaa",
+    "ylläpitää ennakoivasti koneiden ja laitteiden toimintakuntoa säännöllisillä huoltotoimilla ja tarkastuksilla",
+    "huolehtii määräaikaishuoltojen toteutumisesta",
+    "tunnistaa, paikallistaa ja korjaa yleisimmät toimintahäiriöt ja viat",
+    "hyödyntää koneen tietojärjestelmää toimintojen säätämisessä, vianhaussa ja huoltotarpeen arvioinnissa",
+    "ennakoi polttoaine- ja huoltotarvikkeiden tarpeen",
+    "ennakoi hakkuukoneen siirron ajankohdan",
+    "noudattaa työskentelyssään työturvallisuuteen ja ympäristönhoitoon liittyviä ohjeistuksia",
+    "käyttää ja huoltaa työvälineitä turvallisesti",
+    "työskentelee ergonomisesti",
+    "käyttää ja huoltaa työssä tarvittavia henkilökohtaisia suojavarusteita",
+    "huolehtii työmaan ja koneen siisteydestä ja käyttökuntoisuudesta",
+    "huolehtii jätteiden lajittelusta ja pyrkii vähentämään jätteiden määrää",
+    "käsittelee työssä tarvittavia kemikaaleja ohjeiden mukaisesti",
+    "havainnoi ja arvioi työhönsä liittyviä työturvallisuusriskejä",
+    "ilmoittaa turvallisuuspoikkeamista, koneen vioista ja vahingoista",
+    "toimii alkusammutustilanteessa ohjeiden mukaisesti",
+    "ehkäisee toiminnallaan tapaturmia",
+    "osaa toimia hätätilanteessa sekä onnettomuuden ja sairauskohtauksen sattuessa",
+    "hallitsee ensiavun antamisen perusteet ensiapua vaativissa tilanteissa"
+  ],
+  "Puutavaran lähikuljetus": [
+    "tiedostaa oman työnsä kustannusvaikutukset ja tuotostason",
+    "toimii työyhteisössä vuorovaikutteisesti ja kehittävästi",
+    "huomioi toiminnassaan metsänomistajien erilaiset tavoitteet metsän käsittelyssä",
+    "paikantaa työkohteet kartoilla ja GPS-pohjaisilla välineillä",
+    "työskentelee asiakaslähtöisesti ja yrittäjämäisesti sekä vaitiolovelvollisuuden huomioiden",
+    "noudattaa sovittuja työaikoja",
+    "suunnittelee työtehtävät huomioiden vuorotyön vaatimukset",
+    "suunnittelee puunkorjuutyömaan lähikuljetuksen huomioiden koko korjuuketjun",
+    "hyödyntää korjuuohjetta",
+    "työskentelee kuormatraktorilla korjuuohjeiden, metsän- ja luonnonhoidon suositusten, säädösten sekä metsäsertifioinnin kriteerien ja kestävän kehityksen ohjeistusten mukaisesti",
+    "tunnistaa talousmetsien arvokkaat elinympäristöt ja niiden ominaispiirteet",
+    "huomioi vesiensuojelun vaatimukset työkohteella",
+    "tiedostaa energiatehokkaan toiminnan vaikutuksen korjuuketjussa",
+    "huolehtii työkohteen aloittamiseen ja lopettamiseen kuuluvista tehtävistä",
+    "huolehtii työvuoron aloittamiseen ja lopettamiseen kuuluvista tehtävistä",
+    "käyttää koneen tietotekniikkaa ja sovelluksia",
+    "ennakoi ajourien käyttökelpoisuuden",
+    "osaa hyödyntää monilajikuormia tilanteen mukaan",
+    "sijoittelee puutavarapinot varastopaikalle jatkokuljetusjärjestyksen huomioiden",
+    "huolehtii varastopaikan jatkokuljetuskelpoisuudesta",
+    "tietää korjuujäljen arvioinnin kriteerit",
+    "tekee omavalvontaa",
+    "dokumentoi työaikojaan, työn laatua ja määrää",
+    "käyttää kasvinsuojeluaineita ohjeiden mukaisesti",
+    "varustelee ja säätää koneen toiminnot",
+    "ylläpitää ennakoivasti koneiden ja laitteiden toimintakuntoa säännöllisillä huoltotoimilla ja tarkastuksilla",
+    "huolehtii määräaikaishuoltojen toteutumisesta",
+    "tunnistaa, paikallistaa ja korjaa yleisimmät toimintahäiriöt ja viat",
+    "hyödyntää koneen tietojärjestelmää toimintojen säätämisessä, vianhaussa ja huoltotarpeen arvioinnissa",
+    "ennakoi polttoaine- ja huoltotarvikkeiden tarpeen",
+    "ennakoi metsätraktorin siirron ajankohdan",
+    "noudattaa työskentelyssään työturvallisuuteen ja ympäristönhoitoon liittyviä ohjeistuksia",
+    "käyttää ja huoltaa työvälineitä turvallisesti",
+    "työskentelee ergonomisesti",
+    "käyttää ja huoltaa työssä tarvittavia henkilökohtaisia suojavarusteita",
+    "huolehtii työmaan ja koneen siisteydestä ja käyttökuntoisuudesta",
+    "huolehtii jätteiden lajittelusta ja pyrkii vähentämään jätteiden määrää",
+    "käsittelee työssä tarvittavia kemikaaleja ohjeiden mukaisesti",
+    "havainnoi ja arvioi työhönsä liittyviä työturvallisuusriskejä",
+    "ilmoittaa turvallisuuspoikkeamista, koneen vioista ja vahingoista",
+    "toimii alkusammutustilanteessa ohjeiden mukaisesti",
+    "ehkäisee toiminnallaan tapaturmia",
+    "osaa toimia hätätilanteessa sekä onnettomuuden ja sairauskohtauksen sattuessa",
+    "hallitsee ensiavun antamisen perusteet ensiapua vaativissa tilanteissa"
+  ],
+  "Puuterminaalityöt (oppisopimus)": [
+    "tietää puunhankintaketjun vaiheet raaka-aineesta tehtaalle",
+    "tuntee jalostusprosessien materiaalivirrat ja niiden keskinäisten riippuvuudet",
+    "tiedostaa oman työnsä kustannusvaikutukset ja tuotostason",
+    "toimii työyhteisössä vuorovaikutteisesti ja kehittävästi",
+    "työskentelee asiakaslähtöisesti ja yrittäjämäisesti vaitiolovelvollisuuden huomioiden",
+    "noudattaa sovittuja työaikoja",
+    "suunnittelee työtehtävät huomioiden vuorotyön vaatimukset",
+    "suunnittelee terminaalityön huomioiden tuotantolaitoksen toiminnan",
+    "hyödyntää suunnittelussa urakanantajan toimintaohjeita",
+    "työskentelee yleisimmillä terminaalikoneilla työohjeiden sekä metsäsertifioinnin vaatimusten ja kestävän kehityksen ohjeistusten mukaisesti",
+    "käyttää laitoksen tietojärjestelmiä materiaalivirtojen hallintaan",
+    "käyttää työtä ohjaavia toiminnanohjausjärjestelmiä",
+    "lastaa puutavaraa ja tekee tarvittavat toimet luovuttamista varten",
+    "vastaanottaa ja purkaa puutavaraa",
+    "sijoittelee puutavaraa etä- ja lähivarastoihin puutavarakierron vaatimusten mukaisesti",
+    "tarkkailee puutavaran laatua",
+    "seuraa käsiteltävän puun kuutiopainoa",
+    "tekee alueen kunnossapitotöitä",
+    "hallitsee energiatehokkaan ja taloudellisen työskentelytavan",
+    "hyödyntää koneen tietotekniikkaa ja sovelluksia",
+    "arvioi sekä ylläpitää koneen mittaustarkkuutta ja työskentelyn laadukkuutta",
+    "dokumentoi työaikojaan, työn laatua ja määrää",
+    "varustelee ja säätää koneen toiminnot siten, että työskentely on sujuvaa ja tuottavaa",
+    "ylläpitää ennakoivasti koneiden ja laitteiden toimintakuntoa säännöllisillä huoltotoimilla ja tarkastuksilla",
+    "huolehtii määräaikaishuoltojen toteutumisesta",
+    "tunnistaa, paikallistaa ja korjaa yleisimmät toimintahäiriöt ja viat",
+    "hyödyntää koneen tietojärjestelmää toimintojen säätämisessä, vianhaussa ja huoltotarpeen arvioinnissa",
+    "ennakoi polttoaine- ja huoltotarvikkeiden tarpeen",
+    "noudattaa työskentelyssään työturvallisuuteen ja ympäristönhoitoon liittyviä ohjeistuksia",
+    "käyttää ja huoltaa työvälineitä turvallisesti",
+    "työskentelee ergonomisesti",
+    "käyttää työssä tarvittavia henkilökohtaisia suojavarusteita ja huoltaa niitä",
+    "huolehtii työpisteen ja -koneen siisteydestä ja käyttökuntoisuudesta",
+    "huolehtii jätteiden lajittelusta ja pyrkii vähentämään jätteiden määrää",
+    "käsittelee työssä tarvittavia kemikaaleja ohjeiden mukaisesti",
+    "havainnoi ja arvioi työhönsä liittyviä työturvallisuusriskejä",
+    "ilmoittaa turvallisuuspoikkeamista, koneen vioista ja vahingoista",
+    "toimii alkusammutustilanteessa ohjeiden mukaisesti",
+    "ehkäisee toiminnallaan tapaturmia",
+    "osaa toimia hätätilanteessa sekä onnettomuuden ja sairauskohtauksen sattuessa",
+    "hallitsee ensiavun antamisen perusteet ensiapua vaativissa tilanteissa"
+  ],
+  "Koneelliset maanmuokkaus- ja metsähoitotyöt (oppisopimus)": [
+    "tiedostaa oman työnsä kustannusvaikutukset ja tuotostason",
+    "toimii työyhteisössä vuorovaikutteisesti ja kehittävästi",
+    "huomioi toiminnassaan metsänomistajien erilaiset tavoitteet metsän käsittelyssä",
+    "tietää metsän ennallistamistoimenpiteistä",
+    "paikantaa työkohteet kartoilla ja GPS-pohjaisilla välineillä",
+    "työskentelee asiakaslähtöisesti ja yrittäjämäisesti sekä vaitiolovelvollisuuden huomioiden",
+    "noudattaa työaikoja",
+    "suunnittelee työtehtävät huomioiden vuorotyön vaatimukset",
+    "suunnittelee työskentelyjärjestyksen",
+    "hyödyntää työohjetta",
+    "työskentelee kaivin- tai metsäkoneella työohjeiden, metsän- ja luonnonhoidon suositusten, säädösten sekä metsäsertifioinnin kriteerien ja kestävän kehityksen ohjeistusten mukaisesti",
+    "tunnistaa talousmetsien arvokkaat elinympäristöt ja niiden ominaispiirteet",
+    "toimii vesiensuojelun vaatimusten mukaisesti työkohteella",
+    "valitsee maanmuokkauksessa sopivan muokkausmenetelmän ja vaihtaa tarvittaessa menetelmää",
+    "käyttää kasvinsuojeluaineita ohjeiden mukaisesti",
+    "käyttää koneen tietotekniikkaa ja sovelluksia",
+    "tiedostaa energiatehokkaan toiminnan vaikutuksen korjuuketjussa",
+    "huolehtii työkohteen aloittamiseen ja lopettamiseen kuuluvista tehtävistä",
+    "huolehtii työvuoron aloittamiseen ja lopettamiseen kuuluvista tehtävistä",
+    "tekee omavalvontaa",
+    "dokumentoi työaikojaan, työn laatua ja määrää",
+    "varustelee ja säätää koneen toiminnot siten, että työskentely on sujuvaa ja tuottavaa",
+    "ylläpitää ennakoivasti koneiden ja laitteiden toimintakuntoa säännöllisillä huoltotoimilla ja tarkastuksilla",
+    "huolehtii määräaikaishuoltojen toteutumisesta",
+    "tunnistaa, paikallistaa ja korjaa yleisimmät toimintahäiriöt ja viat",
+    "hyödyntää koneen tietojärjestelmää toimintojen säätämisessä, vianhaussa ja huoltotarpeen arvioinnissa",
+    "ennakoi polttoaine- ja huoltotarvikkeiden tarpeen",
+    "ennakoi koneen siirron ajankohdan",
+    "noudattaa työskentelyssään työturvallisuuteen ja ympäristönhoitoon liittyviä ohjeistuksia",
+    "käyttää ja huoltaa työvälineitä turvallisesti",
+    "työskentelee ergonomisesti",
+    "käyttää ja huoltaa työssä tarvittavia henkilökohtaisia suojavarusteita",
+    "huolehtii työmaan ja koneen siisteydestä ja käyttökuntoisuudesta",
+    "huolehtii jätteiden lajittelusta ja pyrkii vähentämään jätteiden määrää",
+    "käsittelee työssä tarvittavia kemikaaleja ohjeiden mukaisesti",
+    "havainnoi ja arvioi työhönsä liittyviä työturvallisuusriskejä",
+    "ilmoittaa turvallisuuspoikkeamista, koneen vioista ja vahingoista",
+    "toimii alkusammutustilanteessa ohjeiden mukaisesti",
+    "ehkäisee toiminnallaan tapaturmia",
+    "osaa toimia hätätilanteessa sekä onnettomuuden ja sairauskohtauksen sattuessa",
+    "hallitsee ensiavun antamisen perusteet ensiapua vaativissa tilanteissa"
+  ],
+  "Metsien monikäyttö": [
+    "tuntee jokamiehenoikeudet",
+    "huomioi toiminnassaan metsänomistajien erilaiset tavoitteet metsän käsittelyssä",
+    "työskentelee asiakaslähtöisesti ja yrittäjämäisesti vaitiolovelvollisuuden huomioiden",
+    "noudattaa sovittuja työaikoja",
+    "suunnittelee aikataulun toteutettavalle työlle",
+    "valitsee tarkoituksenmukaiset työvälineet työkohteelle",
+    "tunnistaa luonnon monimuotoisuudelle arvokkaat elinympäristöt ja niiden ominaispiirteet työkohteella",
+    "huomioi vesiensuojelun vaatimukset työkohteella",
+    "huomioi maisema-arvot",
+    "tekee monikäyttöön liittyvän työkokonaisuuden",
+    "huoltaa työvälineet ja -laitteet",
+    "noudattaa ohjeita ja työturvallisuuteen liittyviä määräyksiä",
+    "käyttää ja huoltaa työvälineitä turvallisesti",
+    "työskentelee ergonomisesti",
+    "käyttää ja huoltaa työssä tarvittavia henkilökohtaisia suojavarusteita",
+    "huolehtii työkohteen siisteydestä",
+    "huolehtii jätteiden lajittelusta ja pyrkii vähentämään jätteiden määrää",
+    "käsittelee työssä tarvittavia kemikaaleja ohjeiden mukaisesti",
+    "havainnoi ja arvioi työhönsä liittyviä työturvallisuusriskejä",
+    "toimii alkusammutustilanteessa ohjeiden mukaisesti",
+    "ehkäisee toiminnallaan tapaturmia",
+    "osaa toimia hätätilanteessa sekä onnettomuuden ja sairauskohtauksen sattuessa",
+    "hallitsee ensiavun antamisen perusteet ensiapua vaativissa tilanteissa"
+  ],
+  "Metsänhoito- ja maanmuokkauskoneen käyttö": [
+    "suunnittelee työskentelyjärjestyksen",
+    "hyödyntää työohjetta",
+    "tekee maanmuokkaus- tai koneellisia metsänhoitotöitä",
+    "työskentelee työohjeiden, metsän- ja luonnonhoidon suositusten, säädösten sekä metsäsertifioinnin kriteerien ja kestävän kehityksen ohjeistusten mukaisesti",
+    "tunnistaa talousmetsien arvokkaat elinympäristöt ja niiden ominaispiirteet",
+    "toimii vesiensuojelun vaatimusten mukaisesti työkohteella",
+    "käyttää koneen tietotekniikkaa ja sovelluksia",
+    "huolehtii työvuoron aloittamiseen ja lopettamiseen kuuluvista tehtävistä",
+    "tekee omavalvontaa",
+    "dokumentoi työaikojaan, työn laatua ja määrää",
+    "tarkistaa koneiden ja laitteiden toimintakunnon",
+    "seuraa koneiden toimintakuntoa",
+    "ylläpitää ennakoivasti koneiden ja laitteiden toimintakuntoa säännöllisillä huoltotoimilla ja tarkastuksilla",
+    "noudattaa työskentelyssään työturvallisuuteen ja ympäristönhoitoon liittyviä ohjeistuksia",
+    "käyttää ja huoltaa työvälineitä turvallisesti",
+    "työskentelee ergonomisesti",
+    "käyttää ja huoltaa työssä tarvittavia henkilökohtaisia suojavarusteita",
+    "huolehtii työmaan ja koneen siisteydestä ja käyttökuntoisuudesta",
+    "huolehtii jätteiden lajittelusta ja pyrkii vähentämään jätteiden määrää",
+    "käsittelee työssä tarvittavia kemikaaleja ohjeiden mukaisesti",
+    "havainnoi ja arvioi työhönsä liittyviä työturvallisuusriskejä",
+    "ilmoittaa turvallisuuspoikkeamista, koneen vioista ja vahingoista",
+    "toimii alkusammutustilanteessa ohjeiden mukaisesti",
+    "ehkäisee toiminnallaan tapaturmia",
+    "osaa toimia hätätilanteessa sekä onnettomuuden ja sairauskohtauksen sattuessa",
+    "hallitsee ensiavun antamisen perusteet ensiapua vaativissa tilanteissa"
+  ],
+  "Metsänhoitopalvelut (oppisopimus)": [
+    "toimii työyhteisössä vuorovaikutteisesti ja kehittävästi",
+    "huomioi toiminnassaan metsänomistajien erilaiset tavoitteet metsän käsittelyssä",
+    "paikantaa työkohteet kartoilla ja GPS-pohjaisilla välineillä",
+    "työskentelee asiakaslähtöisesti ja yrittäjämäisesti vaitiolovelvollisuuden huomioiden",
+    "noudattaa sovittuja työaikoja",
+    "suunnittelee työkohteen",
+    "arvioi työhön kuluvaa aikaa",
+    "raivaa uudistusalan",
+    "välivarastoi siemen- ja taimimateriaalin oikein",
+    "uudistaa metsää sekä kylväen että istuttaen metsäpuun taimia",
+    "tekee uudistamis- ja taimikonhoitotöitä erilaisilla kohteilla itsenäisesti säädösten, metsänhoidon suositusten ja metsäsertifiointiohjeiden mukaisesti",
+    "tunnistaa talousmetsien arvokkaat elinympäristöt ja niiden ominaispiirteet",
+    "toimii vesiensuojelun vaatimusten mukaisesti työkohteella",
+    "käyttää työssä tarvittavia mittavälineitä",
+    "mittaa puustotunnuksia",
+    "tekee omavalvontaa",
+    "hinnoittelee työn sekä työntekijänä että yrittäjänä",
+    "dokumentoi työaikojaan, työn laatua ja määrää",
+    "raportoi tehdyn työn",
+    "tietää työntekijän ja yrittäjän oikeudet ja velvollisuudet",
+    "noudattaa ohjeita ja työturvallisuuteen liittyviä määräyksiä",
+    "käyttää ja huoltaa työvälineitä turvallisesti",
+    "työskentelee ergonomisesti",
+    "käyttää ja huoltaa työssä tarvittavia henkilökohtaisia suojavarusteita",
+    "huolehtii työmaan siisteydestä",
+    "huolehtii jätteiden lajittelusta ja pyrkii vähentämään jätteiden määrää",
+    "käsittelee työssä tarvittavia kemikaaleja ohjeiden mukaisesti",
+    "havainnoi ja arvioi työhönsä liittyviä työturvallisuusriskejä",
+    "toimii alkusammutustilanteessa ohjeiden mukaisesti",
+    "ehkäisee toiminnallaan tapaturmia",
+    "osaa toimia hätätilanteessa sekä onnettomuuden ja sairauskohtauksen sattuessa",
+    "hallitsee ensiavun antamisen perusteet ensiapua vaativissa tilanteissa"
+  ],
+  "Metsäkoneen huolto ja korjaus (oppisopimus)": [
+    "ymmärtää korjaamoyrityksen kulurakenteen ja oman toiminnan merkityksen osana kokonaisuutta",
+    "tiedostaa oman työnsä kustannusvaikutukset ja tuotostason",
+    "seuraa alan kehitystä",
+    "toimii työyhteisössä vuorovaikutteisesti ja kehittävästi",
+    "työskentelee asiakaslähtöisesti ja yrittäjämäisesti vaitiolovelvollisuuden huomioiden",
+    "noudattaa työaikoja",
+    "tunnistaa komponentit",
+    "paikantaa komponentit",
+    "kuvaa järjestelmien toiminnan ohjekirjan ja kaavioiden avulla",
+    "suunnittelee huoltotoimien työjärjestyksen",
+    "tekee huolto-ohjelmaan kuuluvat huollot ohjekirjan ohjeiden mukaisesti",
+    "tekee työmääräyksen mukaiset korjaustyöt koneeseen",
+    "kunnostaa nosturiin, voimansiirtoon tai hydrauliikkaan kuuluvan komponentin",
+    "käsittelee komponentit huoltotoimenpiteitä varten",
+    "säätää koneen ja laitteet huolto-ohjeen mukaan",
+    "huolehtii huoltotarvikkeiden, työtilojen ja työssä tarvittavien työ- ja mittavälineiden käyttökelpoisuudesta",
+    "tuntee työkoneessa käytettävien materiaalien ja aineiden ominaisuudet",
+    "dokumentoi työaikojaan, työn laatua ja määrää laskutusta varten",
+    "luovuttaa työn asiakkaalle",
+    "noudattaa palo- ja turvallisuusohjeita",
+    "tekee konekohtaiset suojaustoimenpiteet",
+    "tekee hitsauspaikan suojaustoimenpiteet",
+    "tekee korjaushitsauksia",
+    "huolehtii hitsausvarusteiden kunnosta",
+    "osaa tehdä alkusammutuksen",
+    "noudattaa työskentelyssään turvallisuuteen liittyviä ohjeistuksia ja säädöksiä",
+    "käyttää ja huoltaa työvälineitä turvallisesti",
+    "siirtää koneita turvallisesti",
+    "tunnistaa voimien ja komponenttien massojen vaikutuksen turvalliseen työskentelyyn",
+    "työskentelee ergonomisesti",
+    "käyttää ja huoltaa työssä tarvittavia henkilökohtaisia suojavarusteita",
+    "huolehtii työpaikan ja koneiden siisteydestä ja käyttökuntoisuudesta",
+    "huolehtii jätteiden lajittelusta ja pyrkii vähentämään jätteiden määrää",
+    "käsittelee työssä tarvittavia kemikaaleja ohjeiden mukaisesti",
+    "havainnoi ja arvioi työhönsä liittyviä työturvallisuusriskejä",
+    "ilmoittaa turvallisuuspoikkeamista, laitteiden ja työvälineiden vioista ja vahingoista",
+    "ehkäisee toiminnallaan tapaturmia",
+    "osaa toimia hätätilanteessa sekä onnettomuuden ja sairauskohtauksen sattuessa",
+    "hallitsee ensiavun antamisen perusteet ensiapua vaativissa tilanteissa"
+  ],
+  "Metsäkoneen vianhaku (oppisopimus)": [
+    "tuntee eri metsäkoneen tekniset järjestelmät",
+    "tunnistaa tilanteita, jolloin metsäkone toimii normaalista poikkeavalla tavalla",
+    "määrittelee korjaustarpeen",
+    "raportoi asiakkaalle huoltotoimenpiteistä",
+    "käyttää vianetsintäjärjestelmiä",
+    "käyttää mittareita ja testereitä vianetsinnässä ja tulkitsee niiden tuloksia",
+    "käyttää erilaisia testejä vian poissulkemiseen tai sen vahvistamiseen",
+    "hyödyntää hydrauliikka- ja sähkökaavioita",
+    "käyttää vianmäärityksen tukena teknistä tukimateriaalia, myös vieraalla kielellä",
+    "hyödyntää olemassa olevaa tukiverkostoa ja -materiaalia",
+    "säätää eri ohjainlaitteiden ja toimintojen parametrit ja arvot ohjeen mukaiseksi",
+    "säätää ja kalibroi anturin mitta-alueen kohdalleen ja varmistaa toimivuuden",
+    "testaa koneen toimintaa eri menetelmillä, riittävällä laajuudella ja kuormituksilla suhteessa esiintyneeseen vikaan",
+    "käyttää konetta työlajiin kuuluvissa tehtävissä työmaalla",
+    "hyödyntää koneenohjausjärjestelmää ja mittareita varmistaakseen koneen toimivuuden",
+    "noudattaa työskentelyssään turvallisuuteen liittyviä ohjeistuksia",
+    "käyttää ja huoltaa työvälineitä turvallisesti",
+    "siirtää koneita turvallisesti",
+    "tunnistaa voimien ja komponenttien massojen vaikutuksen turvalliseen työskentelyyn",
+    "työskentelee ergonomisesti",
+    "käyttää ja huoltaa työssä tarvittavia henkilökohtaisia suojavarusteita",
+    "huolehtii työpaikan ja koneiden siisteydestä ja käyttökuntoisuudesta",
+    "huolehtii jätteiden lajittelusta ja pyrkii vähentämään jätteiden määrää",
+    "käsittelee työssä tarvittavia kemikaaleja ohjeiden mukaisesti",
+    "hallitsee ensiavun antamisen perusteet ensiapua vaativissa tilanteissa",
+    "toimii alkusammutustilanteessa ohjeiden mukaisesti",
+    "havainnoi ja arvioi työhönsä liittyviä työturvallisuusriskejä",
+    "ilmoittaa turvallisuuspoikkeamista, laitteiden ja työvälineiden vioista ja vahingoista",
+    "ehkäisee toiminnallaan tapaturmia",
+    "osaa toimia hätätilanteessa sekä onnettomuuden ja sairauskohtauksen sattuessa"
+  ]
+};
+  const GENERAL=[];
+  const COMPLETION_CRITERIA=new Set([]);
+  const PART_COMPLETION_CRITERIA=new Set([]);
+  const COMPLETION_LABELS={completed:'Suoritettu','not-completed':'Ei suoritettu',na:'Ei arvioida tässä näytössä (N/A)'};
+  const DEMONSTRATION_METHODS={
+  "Kestävä metsän hoito ja hyödyntäminen": "Opiskelija osoittaa ammattitaitonsa näytössä maastokohteilla käytännön työtehtävissä istuttamalla puuntaimia, tekemällä metsänhoitotyötä ja valmistamalla puutavaraa ensiharvennuskohteella. Siltä osin kuin tutkinnon osassa vaadittua ammattitaitoa ei voida arvioida näytön perusteella, ammattitaidon osoittamista täydennetään yksilöllisesti muilla tavoin. Lisäksi opiskelija suorittaa työelämän edellyttämät luvat ja pätevyydet, jotka ovat välttämättömiä ammattitaitovaatimuksissa edellytetyn osaamisen osoittamiseksi.",
+  "Metsätraktorin käyttö": "Opiskelija osoittaa ammattitaitonsa näytössä suunnittelemalla ja tekemällä puutavaran lähikuljetusta metsätyömaalla. Siltä osin kuin tutkinnon osassa vaadittua ammattitaitoa ei voida arvioida näytön perusteella, ammattitaidon osoittamista täydennetään yksilöllisesti muilla tavoin. Lisäksi opiskelija suorittaa työelämän edellyttämät luvat ja pätevyydet, jotka ovat välttämättömiä ammattitaitovaatimuksissa edellytetyn osaamisen osoittamiseksi.",
+  "Työkoneiden kunnossapito": "Opiskelija osoittaa ammattitaitonsa näytössä käytännön työtehtävissä suunnittelemalla ja tekemällä metsäkoneen, puutavara-auton, kaivinkoneen tai terminaalikoneen huoltotyön sekä tekemällä koneen toimintakunnon ylläpitoon liittyviä työtehtäviä. Lisäksi hän osoittaa tuntevansa koneen perusrakenteen ja toimintaperiaatteen. Siltä osin kuin tutkinnon osassa vaadittua ammattitaitoa ei voida arvioida näytön perusteella, ammattitaidon osoittamista täydennetään yksilöllisesti muilla tavoin. Lisäksi opiskelija suorittaa työelämän edellyttämät luvat ja pätevyydet, jotka ovat välttämättömiä ammattitaitovaatimuksissa edellytetyn osaamisen osoittamiseksi.",
+  "Koneellinen puutavaran valmistus": "Opiskelija osoittaa ammattitaitonsa näytössä käytännön työtehtävissä suunnittelemalla korjuun leimikolle sekä tekemällä koneellista puunkorjuuta ja hakkuukoneen toimintakunnon ylläpitoon liittyviä huolto- ja korjaustehtäviä. Kasvinsuojeluaineiden turvallinen käyttö osoitetaan suorittamalla ajantasaisen kasvinsuojeluainelainsäädännön mukainen tutkinto. Siltä osin kuin tutkinnon osassa vaadittua ammattitaitoa ei voida arvioida näytön perusteella, ammattitaidon osoittamista täydennetään yksilöllisesti muilla tavoin. Lisäksi opiskelija suorittaa työelämän edellyttämät luvat ja pätevyydet, jotka ovat välttämättömiä ammattitaitovaatimuksissa edellytetyn osaamisen osoittamiseksi.",
+  "Puutavaran lähikuljetus": "Opiskelija osoittaa ammattitaitonsa näytössä käytännön työtehtävissä suunnittelemalla korjuun ja tekemällä lähikuljetuksen työmaalla. Lisäksi hän tekee koneen toimintakunnon ylläpitoon liittyviä toimenpiteitä. Kasvinsuojeluaineiden turvallinen käyttö osoitetaan suorittamalla ajantasaisen kasvinsuojeluainelainsäädännön mukainen tutkinto. Siltä osin kuin tutkinnon osassa vaadittua ammattitaitoa ei voida arvioida näytön perusteella, ammattitaidon osoittamista täydennetään yksilöllisesti muilla tavoin. Lisäksi opiskelija suorittaa työelämän edellyttämät luvat ja pätevyydet, jotka ovat välttämättömiä ammattitaitovaatimuksissa edellytetyn osaamisen osoittamiseksi.",
+  "Puuterminaalityöt (oppisopimus)": "Opiskelija osoittaa ammattitaitonsa näytössä käytännön työtehtävissä suunnittelemalla ja tekemällä puutavaran käsittelyä materiaalikoneella tai pyöräkuormaajalla puuterminaalissa. Siltä osin kuin tutkinnon osassa vaadittua ammattitaitoa ei voida arvioida näytön perusteella, ammattitaidon osoittamista täydennetään yksilöllisesti muilla tavoin. Lisäksi opiskelija suorittaa työelämän edellyttämät luvat ja pätevyydet, jotka ovat välttämättömiä ammattitaitovaatimuksissa edellytetyn osaamisen osoittamiseksi.",
+  "Koneelliset maanmuokkaus- ja metsähoitotyöt (oppisopimus)": "Opiskelija osoittaa ammattitaitonsa näytössä käytännön työtehtävissä tekemällä työsuunnitelman ja vähintään yhden metsänparannustyölajin tai koneellisen metsän- tai luonnonhoitotyölajin. Lisäksi hän tekee koneen toimintakunnon ylläpitoon liittyviä säätö- ja huoltotoimenpiteitä. Kasvinsuojeluaineiden turvallinen käyttö osoitetaan suorittamalla ajantasaisen kasvinsuojeluainelainsäädännön mukainen tutkinto. Siltä osin kuin tutkinnon osassa vaadittua ammattitaitoa ei voida arvioida näytön perusteella, ammattitaidon osoittamista täydennetään yksilöllisesti muilla tavoin. Lisäksi opiskelija suorittaa työelämän edellyttämät luvat ja pätevyydet, jotka ovat välttämättömiä ammattitaitovaatimuksissa edellytetyn osaamisen osoittamiseksi.",
+  "Metsien monikäyttö": "Opiskelija osoittaa ammattitaitonsa näytössä suunnittelemalla ja tekemällä valitsemansa metsien monikäyttöön liittyvän työn käytännön työtehtävissä. Käytännön työtehtävä voi liittyä maisemanhoitoon, luonnonhoitoon, luontomatkailuun, erikoispuiden kasvatukseen, piha- tai taajamametsien käsittelyyn, retkeily- tai vaellusreitteihin tai niiden rakenteisiin, hirsitöihin, kenttäsahaukseen, metsästykseen, riistaan, kalastukseen, keräilytuotteisiin tai ennallistamistöihin. Siltä osin kuin tutkinnon osassa vaadittua ammattitaitoa ei voida arvioida näytön perusteella, ammattitaidon osoittamista täydennetään yksilöllisesti muilla tavoin. Lisäksi opiskelija suorittaa työelämän edellyttämät luvat ja pätevyydet, jotka ovat välttämättömiä ammattitaitovaatimuksissa edellytetyn osaamisen osoittamiseksi.",
+  "Metsänhoito- ja maanmuokkauskoneen käyttö": "Opiskelija osoittaa ammattitaitonsa näytössä käytännön työtehtävissä maastokohteella tekemällä joko maanmuokkausta tai metsänhoitotyötä kaivin- tai metsäkoneella, ja tekemällä koneen päivittäisiä huoltotoimenpiteitä. Siltä osin kuin tutkinnon osassa vaadittua ammattitaitoa ei voida arvioida näytön perusteella, ammattitaidon osoittamista täydennetään yksilöllisesti muilla tavoin. Lisäksi opiskelija suorittaa työelämän edellyttämät luvat ja pätevyydet, jotka ovat välttämättömiä ammattitaitovaatimuksissa edellytetyn osaamisen osoittamiseksi.",
+  "Metsänhoitopalvelut (oppisopimus)": "Opiskelija osoittaa ammattitaitonsa näytössä käytännön työtehtävissä suunnittelemalla ja tekemällä metsänhoitotyökohteen sekä hinnoittelemalla työnsä. Siltä osin kuin tutkinnon osassa vaadittua ammattitaitoa ei voida arvioida näytön perusteella, ammattitaidon osoittamista täydennetään yksilöllisesti muilla tavoin. Lisäksi opiskelija suorittaa työelämän edellyttämät luvat ja pätevyydet, jotka ovat välttämättömiä ammattitaitovaatimuksissa edellytetyn osaamisen osoittamiseksi.",
+  "Metsäkoneen huolto ja korjaus (oppisopimus)": "Opiskelija osoittaa ammattitaitonsa näytössä käytännön työtehtävissä tekemällä metsäkoneen laajimpaan määräaikaishuoltoon liittyviä toimenpiteitä. Hän irrottaa, kunnostaa, asentaa ja säätää moottoriin, voimansiirtoon, hydrauliikkaan ja sähköjärjestelmään kuuluvan komponentin ammattitaitovaatimusten mukaisesti. Opiskelija osoittaa ammattitaitonsa korjaamotoimintaympäristössä. Siltä osin kuin tutkinnon osassa vaadittua ammattitaitoa ei voida arvioida näytön perusteella, ammattitaidon osoittamista täydennetään yksilöllisesti muilla tavoin. Lisäksi opiskelija suorittaa työelämän edellyttämät luvat ja pätevyydet, jotka ovat välttämättömiä ammattitaitovaatimuksissa edellytetyn osaamisen osoittamiseksi.",
+  "Metsäkoneen vianhaku (oppisopimus)": "Opiskelija osoittaa ammattitaitonsa näytössä työkohteella käytännön työtehtävissä määrittelemällä koneen moottorin, voimansiirron, hydrauliikan käyttö- ja sähköjärjestelmän toimintahäiriöitä käyttäen apuna vianetsintäjärjestelmiä, erilaisia mittauksia ja vianpuolitusmenetelmiä sekä hydrauliikka- ja sähkökaavioita. Lisäksi hän määrittelee korjaustarpeen. Näyttöön voidaan yhdistää metsäkoneiden huollon ja korjauksen näyttö siltä osin kuin se on näytön toteutuksen ja työelämän kannalta luontevaa. Siltä osin kuin tutkinnon osassa vaadittua ammattitaitoa ei voida arvioida näytön perusteella, ammattitaidon osoittamista täydennetään yksilöllisesti muilla tavoin. Lisäksi opiskelija suorittaa työelämän edellyttämät luvat ja pätevyydet, jotka ovat välttämättömiä ammattitaitovaatimuksissa edellytetyn osaamisen osoittamiseksi."
+};
+  const demonstrationMethodFor=name=>DEMONSTRATION_METHODS[name];
+  const ASSESSMENT_SCALE=[
+    ['Tyydyttävä 1',['toteuttaa työn ohjeiden mukaisesti','toimii yhteistyökykyisesti','tarvitsee joissakin tilanteissa lisäohjeita','hyödyntää työssä tarvittavaa perustietoa','muuttaa toimintaansa saamansa palautteen mukaisesti']],
+    ['Tyydyttävä 2',['toteuttaa työn oma-aloitteisesti ja ohjeiden mukaisesti','toimii yhteistyökykyisesti ja vuorovaikutteisesti','tarvitsee vain harvoissa tilanteissa lisäohjeita','hyödyntää työssä tarvittavaa tietoa tarkoituksenmukaisesti','muuttaa toimintaansa saamansa palautteen ja omien havaintojen mukaisesti']],
+    ['Hyvä 3',['toteuttaa työkokonaisuuden itsenäisesti','toimii yhteistyökykyisesti ja aloitteellisesti vuorovaikutustilanteissa','selviytyy tavanomaisista ongelmanratkaisutilanteista','hyödyntää työssä tarvittavaa tietoa monipuolisesti','arvioi suoriutumistaan realistisesti']],
+    ['Hyvä 4',['suunnittelee ja toteuttaa työkokonaisuuden itsenäisesti','toimii yhteistyökykyisesti ja rakentavasti vuorovaikutustilanteissa','selviytyy ongelmanratkaisutilanteista hyödyntäen monipuolisia ratkaisutapoja','soveltaa työssä tarvittavaa tietoa monipuolisesti ja perustellusti','arvioi suoriutumistaan realistisesti sekä tunnistaa vahvuuksiaan ja kehittämisen kohteitaan']],
+    ['Kiitettävä 5',['suunnittelee ja toteuttaa työkokonaisuuden itsenäisesti ottaen huomioon muut toimijat','toimii yhteistyökykyisesti ja rakentavasti haastavissakin vuorovaikutustilanteissa','soveltaa työssä tarvittavaa tietoa ongelmanratkaisutilanteissa monipuolisesti ja kriittisesti','esittää työhön ja toimintaympäristöön liittyviä perusteltuja kehittämisehdotuksia','arvioi suoriutumistaan realistisesti ja esittää perusteltuja ratkaisuja osaamisensa kehittämiseen','ymmärtää oman työnsä merkityksen osana laajempaa kokonaisuutta']]
+  ];
+  const assessmentScaleHtml=()=>'<h2>Arviointiasteikko 1–5</h2><table class="scale-table"><tbody>'+ASSESSMENT_SCALE.map(([level,items])=>'<tr><th>'+level+'</th><td><ul>'+items.map(item=>'<li>'+item+'</li>').join('')+'</ul></td></tr>').join('')+'</tbody></table>';
+  const SPECIFIC={};
+  const localDate=()=>{const d=new Date();return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')};
+  const blank=()=>({path:'forest',info:{demoId:'',place:'',schoolName:'',workName:'',date:localDate()},selected:[],active:0,ratings:{},completions:{},notes:{},finalGrades:{},signatures:{}});let state;try{state=Object.assign(blank(),JSON.parse(localStorage.getItem('metsaalan-pt-v1')||'{}'));state.info=Object.assign(blank().info,state.info||{});state.selected=state.selected||[];state.notes=state.notes||{};state.completions=state.completions||{}}catch{state=blank()}
+  const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],toast=t=>{const e=$('#toast');e.textContent=t;e.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>e.classList.remove('show'),2800)},save=()=>{try{localStorage.setItem('metsaalan-pt-v1',JSON.stringify(state));$('#saveText').textContent='Tallennettu tälle laitteelle'}catch{$('#saveText').textContent='Tallennus ei onnistunut';toast('Laitteen tallennustila ei ole käytettävissä. Tallenna PDF ennen sulkemista.')}},dateLabel=v=>v?new Date(v+'T12:00:00').toLocaleDateString('fi-FI'):'—',escapeHtml=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const part=x=>({id:x[0],name:x[0],osp:x[1]}),allParts=()=>{const p=PARTS[state.path];return [...p.required.map(part),...p.optional.map(part)]},selectedParts=()=>{const map=new Map(allParts().map(x=>[x.id,x]));return state.selected.map(id=>map.get(id)).filter(Boolean)},criteriaFor=name=>CRITERIA[name]||GENERAL,isCompletion=(part,text)=>COMPLETION_CRITERIA.has(text)||PART_COMPLETION_CRITERIA.has(part.name+'\u0000'+text),criterionValue=(part,index,text)=>isCompletion(part,text)?COMPLETION_LABELS[state.completions[part.id]?.[index]]||'—':state.ratings[part.id]?.[index]||'—',assessedCount=part=>criteriaFor(part.name).filter((text,index)=>isCompletion(part,text)?Boolean(state.completions[part.id]?.[index]):Boolean(state.ratings[part.id]?.[index])).length;
+  function show(n){$$('.screen').forEach(s=>s.classList.remove('active'));$('#screen'+n).classList.add('active');$$('.step').forEach(s=>{const v=+s.dataset.step;s.classList.toggle('active',v===n);s.classList.toggle('done',v<n)});if(n===2)renderSelection();if(n===3)renderEvaluation();if(n===4)renderReport();window.scrollTo({top:0,behavior:'smooth'})}
+  function loadInputs(){for(const k in state.info){const e=$('#'+k);if(e)e.value=state.info[k]||''}$$('.path').forEach(b=>b.classList.toggle('selected',b.dataset.path===state.path))}function captureInputs(){for(const k in state.info){const e=$('#'+k);if(e)state.info[k]=e.value.trim()}save()}
+  function renderSelection(){captureInputs();const p=PARTS[state.path];$('#selectedPath').textContent=p.name;$('#selectionInfo').textContent='Metsäalan perustutkinto'+(state.info.demoId?' · '+state.info.demoId:'');const group=(name,list)=>`<section class="group"><button class="group-title" type="button"><b>${name} tutkinnon osat</b><span><i>⌄</i> Avaa / sulje</span></button><div class="group-body">${list.map(item=>`<label class="choice"><input class="part-check" type="checkbox" value="${item.id}" ${state.selected.includes(item.id)?'checked':''}><span><b>${item.name}</b><span>${item.osp} osp</span></span></label>`).join('')}</div></section>`;$('#partGroups').innerHTML=group('Pakolliset',p.required.slice(0,3).map(part))+group('Vaihtoehtoiset pakolliset',p.required.slice(3).map(part))+group('Valinnaiset',p.optional.map(part));$$('.group-title').forEach(b=>b.onclick=()=>b.closest('.group').classList.toggle('closed'));$$('.part-check').forEach(i=>i.onchange=()=>{state.selected=$$('.part-check:checked').map(x=>x.value);$('#selectedCount').textContent=state.selected.length;save()});$('#selectedCount').textContent=state.selected.length}
+  function renderModuleList(){const items=selectedParts();$('#sidePath').textContent=PARTS[state.path].name;$('#moduleList').innerHTML=items.map((p,i)=>{const total=criteriaFor(p.name).length,d=assessedCount(p);return `<button class="module ${i===state.active?'active':''}" data-module="${i}"><i class="dot ${d===total&&total?'done':''}"></i><span>${p.name}</span><small>${d===total?'valmis':d+'/'+total}</small></button>`}).join('');$$('.module').forEach(b=>b.onclick=()=>{state.active=+b.dataset.module;save();renderEvaluation()})}
+  function renderEvaluation(){
+    const parts=selectedParts();
+    if(!parts.length){$('#evaluationContent').innerHTML='<div class="empty"><h1>Ei valittuja tutkinnon osia</h1><p>Valitse vähintään yksi tutkinnon osa ennen arviointia.</p><button class="primary" id="backToParts">Valitse tutkinnon osat</button></div>';$('#backToParts').onclick=()=>show(2);return}
+    if(state.active>=parts.length)state.active=0;
+    renderModuleList();
+    const p=parts[state.active],cs=criteriaFor(p.name),ratings=state.ratings[p.id]||{},done=assessedCount(p);
+    const numeric=cs.map((text,index)=>isCompletion(p,text)?null:ratings[index]).filter(Boolean);
+    const average=numeric.length?(numeric.reduce((sum,value)=>sum+value,0)/numeric.length).toFixed(1):'—';
+    const cards=cs.map((text,index)=>{
+      const controls=isCompletion(p,text)
+        ?'<div class="completion"><label>Suoritusmerkintä</label>'+Object.entries(COMPLETION_LABELS).map(([key,label])=>'<button class="completion-choice '+key+' '+(state.completions[p.id]?.[index]===key?'selected':'')+'" data-completion="'+key+'" data-criterion="'+index+'" type="button">'+label+'</button>').join('')+'</div>'
+        :'<div class="grading"><label>Arviointi</label>'+[1,2,3,4,5].map(value=>'<button class="grade '+(ratings[index]===value?'selected':'')+'" data-rating="'+value+'" data-criterion="'+index+'" type="button">'+value+'</button>').join('')+'</div>';
+      return '<article class="criterion" id="criterion-'+index+'"><div class="criterion-head"><span class="bullet">•</span><h2>'+escapeHtml(text)+'</h2></div>'+controls+'</article>';
+    }).join('');
+    const quick=cs.map((text,index)=>'<button class="quick" data-target="criterion-'+index+'" type="button">'+(index+1)+'. '+escapeHtml(text)+'<small>'+escapeHtml(isCompletion(p,text)?criterionValue(p,index,text):ratings[index]?'Arviointi '+ratings[index]:'Ei vielä arvioitu')+'</small></button>').join('');
+    $('#evaluationContent').innerHTML='<div class="title-row"><div><h1>'+escapeHtml(p.name)+'</h1><p class="sub">Tutkinnon osa · '+p.osp+' osaamispistettä</p></div><div class="progress-box"><b>'+done+'/'+cs.length+' käsitelty</b><span>Keskiarvo: '+average+'</span></div></div><div class="eval-grid"><section><div class="context"><div><span>Näytön tunniste</span><b>'+escapeHtml(state.info.demoId||'—')+'</b></div><div><span>Näyttöpaikka ja yritys</span><b>'+escapeHtml(state.info.place||'—')+'</b></div><div><span>Arviointipäivä</span><b>'+dateLabel(state.info.date)+'</b></div></div><details class="assessment-scale"><summary>Arviointiasteikko 1–5</summary><div>'+assessmentScaleHtml()+'</div></details><div class="criteria">'+cards+'</div><section class="demonstration-method"><h2>Ammattitaidon osoittamistavat</h2><p>'+escapeHtml(demonstrationMethodFor(p.name))+'</p></section></section><nav class="quicknav"><h3>Tässä tutkinnon osassa</h3><p>Siirry arviointikohteeseen</p>'+quick+'<hr><div class="nextprev"><button id="previousModule" type="button">← Edellinen</button><button id="nextModule" type="button">Seuraava →</button></div></nav><div class="notes"><label for="moduleNotes">Huomiot</label><textarea id="moduleNotes" placeholder="Kirjaa tarvittaessa huomioita…">'+escapeHtml(state.notes[p.id]||'')+'</textarea></div></div><div class="eval-finish"><button class="secondary" id="backToPartsBottom" type="button">← Palaa tutkinnon osien valintaan</button><button class="primary" id="toSummary" type="button">Siirry yhteenvetoon →</button></div>';
+    $$('.grade').forEach(button=>button.onclick=()=>{state.ratings[p.id]=state.ratings[p.id]||{};state.ratings[p.id][button.dataset.criterion]=+button.dataset.rating;save();renderEvaluation()});
+    $$('.completion-choice').forEach(button=>button.onclick=()=>{state.completions[p.id]=state.completions[p.id]||{};state.completions[p.id][button.dataset.criterion]=button.dataset.completion;save();renderEvaluation()});
+    $('#moduleNotes').oninput=event=>{state.notes[p.id]=event.target.value;save()};
+    $$('.quick').forEach(button=>button.onclick=()=>$('#'+button.dataset.target).scrollIntoView({behavior:'smooth',block:'center'}));
+    $('#previousModule').onclick=()=>{state.active=Math.max(0,state.active-1);save();renderEvaluation()};
+    $('#nextModule').onclick=()=>{state.active=Math.min(parts.length-1,state.active+1);save();renderEvaluation()};
+    $('#backToPartsBottom').onclick=()=>show(2);
+    $('#toSummary').onclick=()=>show(4);
+    $('#mobileModules').onclick=()=>toast(parts.map((x,i)=>(i+1)+'. '+x.name).join(' · '));
+  }
+  const missingFinalGrades=()=>selectedParts().filter(part=>!state.finalGrades[part.id]);
+  const requireFinalGrades=()=>{const missing=missingFinalGrades();if(missing.length){const select=$$('.report-final').find(element=>element.dataset.id===missing[0].id);select?.classList.add('missing');select?.focus();toast(`Anna arvosana: ${missing[0].name}`);return false}if(!state.reviewProcedureAcknowledged){const acknowledgement=$('#reviewProcedureAcknowledged');acknowledgement?.focus();toast('Vahvista, että opiskelija on saanut tiedon arvioinninoikaisumenettelystä.');return false}return true};
+  function renderReport(){const parts=selectedParts(),noteParts=parts.filter(p=>(state.notes[p.id]||'').trim()),notesSection=$('#reportNotes'),averageFor=p=>{const values=criteriaFor(p.name).map((text,index)=>isCompletion(p,text)?null:state.ratings[p.id]?.[index]).filter(Boolean);return values.length?(values.reduce((sum,value)=>sum+value,0)/values.length).toFixed(1).replace('.',','):'—'};if(!$('#reportAssessments'))notesSection.insertAdjacentHTML('beforebegin','<section class="report-assessments" id="reportAssessments"><h2>Arvioinnit</h2><div id="reportAssessmentsContent"></div></section>');$('#reportGrades').innerHTML=parts.map(p=>`<tr><td>${p.name}</td><td>${p.osp} osp</td><td><select class="report-final ${state.finalGrades[p.id]?'':'missing'}" data-id="${p.id}" aria-label="${escapeHtml(p.name)}: arvosana" aria-required="true"><option value="">Valitse</option>${[1,2,3,4,5].map(n=>`<option ${state.finalGrades[p.id]===n?'selected':''} value="${n}">${n}</option>`).join('')}</select> <span class="screen-average">(keskiarvo ${averageFor(p)})</span></td></tr>`).join('');$('#reportAssessmentsContent').innerHTML=parts.map(p=>`<article class="report-assessment"><h3>${escapeHtml(p.name)}</h3><ol>${criteriaFor(p.name).map((text,i)=>`<li><span>${escapeHtml(text)}</span><b>${escapeHtml(criterionValue(p,i,text))}</b></li>`).join('')}</ol><section class="report-demonstration"><h4>Ammattitaidon osoittamistavat</h4><p>${escapeHtml(demonstrationMethodFor(p.name))}</p></section></article>`).join('');notesSection.hidden=!noteParts.length;if(noteParts.length)$('#reportNotesContent').innerHTML=noteParts.map(p=>`<article class="report-note"><h3>${escapeHtml(p.name)}</h3><p>${escapeHtml(state.notes[p.id])}</p></article>`).join('');$('#reportScale').innerHTML=assessmentScaleHtml();$$('.report-final').forEach(e=>e.onchange=()=>{if(e.value)state.finalGrades[e.dataset.id]=+e.value;else delete state.finalGrades[e.dataset.id];e.classList.toggle('missing',!e.value);save()});$('#reportSchoolName').textContent=state.info.schoolName||'Nimi puuttuu';$('#reportWorkName').textContent=state.info.workName||'Nimi puuttuu';['sigSchoolDate','sigWorkDate','sigStudentDate'].forEach(id=>{const e=$('#'+id);e.value=state.signatures[id+'Date']||state.info.date||'';e.onchange=()=>{state.signatures[id+'Date']=e.value;save()}});['sigSchool','sigWork','sigStudent'].forEach(setupCanvas)}
+  function setupCanvas(id){const canvas=$('#'+id),data=state.signatures[id],rect=canvas.getBoundingClientRect(),scale=devicePixelRatio||1;canvas.width=rect.width*scale;canvas.height=rect.height*scale;const ctx=canvas.getContext('2d');ctx.scale(scale,scale);ctx.lineWidth=2;ctx.lineCap='round';ctx.strokeStyle='#102a43';if(data){const img=new Image();img.onload=()=>ctx.drawImage(img,0,0,rect.width,rect.height);img.src=data}let drawing=false,last;const pos=e=>{const r=canvas.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top}};canvas.onpointerdown=e=>{drawing=true;last=pos(e);canvas.setPointerCapture(e.pointerId)};canvas.onpointermove=e=>{if(!drawing)return;const p=pos(e);ctx.beginPath();ctx.moveTo(last.x,last.y);ctx.lineTo(p.x,p.y);ctx.stroke();last=p};canvas.onpointerup=canvas.onpointercancel=()=>{if(!drawing)return;drawing=false;state.signatures[id]=canvas.toDataURL();save()}}
+  $$('.sig-clear').forEach(b=>b.onclick=()=>{delete state.signatures[b.dataset.clear];save();renderReport()});$$('#screen1 input').forEach(e=>e.addEventListener('input',captureInputs));$$('.path').forEach(b=>b.onclick=()=>{if(state.path===b.dataset.path)return;state.path=b.dataset.path;state.selected=[];state.active=0;save();loadInputs()});$$('[data-next]').forEach(b=>b.onclick=()=>{captureInputs();show(+b.dataset.next)});$$('[data-back]').forEach(b=>b.onclick=()=>show(+b.dataset.back));$('#toEvaluation').onclick=()=>{captureInputs();if(!state.selected.length){toast('Valitse vähintään yksi tutkinnon osa.');return}show(3)};
+  const reportFileName=()=>`metsaalan_pt_${(state.info.date||localDate()).replace(/[^0-9-]/g,'')}.pdf`;
+  const createReportPdf=()=>{
+    if(missingFinalGrades().length)throw new Error('Tutkinnon osien arvosanat puuttuvat.');
+    if(!state.reviewProcedureAcknowledged)throw new Error('Tiedoksianto arvioinninoikaisumenettelystä puuttuu.');
+    if(!window.jspdf?.jsPDF)throw new Error('PDF-kirjastoa ei saatu ladattua.');
+    const {jsPDF}=window.jspdf,doc=new jsPDF({unit:'mm',format:'a4'}),width=210,margin=16,contentWidth=width-margin*2,footer=()=>{const page=doc.getNumberOfPages();doc.setFontSize(8);doc.setTextColor(105,117,130);doc.text(`Näytön arviointi · ${page}`,margin,290);doc.setTextColor(20,42,67)};
+    for(const style of ['normal','bold']){doc.addFileToVFS('Metsa-'+style+'.ttf',window.METSA_PDF_FONTS[style]);doc.addFont('Metsa-'+style+'.ttf','Metsa',style)}doc.setFont('Metsa','normal');
+    let y=20;
+    const newPage=()=>{const size=doc.getFontSize();footer();doc.addPage();doc.setFontSize(size);y=20};
+    const ensure=height=>{if(y+height>278)newPage()};
+    const text=(value,size=10,indent=0,leading=4.7)=>{doc.setFontSize(size);const lines=doc.splitTextToSize(String(value),contentWidth-indent);for(const line of lines){ensure(leading+2);doc.setFontSize(size);doc.text(line,margin+indent,y);y+=leading}y+=2};
+    const heading=(value,size=16)=>{ensure(12);doc.setFont('Metsa','bold');text(value,size,0,6);doc.setFont('Metsa','normal');};
+    const scalePdf=()=>{newPage();heading('Arviointiasteikko 1–5',15);ASSESSMENT_SCALE.forEach(([level,items])=>{heading(level,11);items.forEach(item=>text('- '+item,9.5,4,4.5));y+=2})};
+    doc.setTextColor(20,42,67);heading('Näytön arvioinnin raportti',18);doc.setFontSize(10);doc.setTextColor(74,89,104);text('Metsäalan perustutkinto',10);doc.setTextColor(20,42,67);y+=3;
+    const info=[['Näytön tunniste',state.info.demoId||'—'],['Näyttöpaikka ja yritys',state.info.place||'—'],['Arviointipäivä',dateLabel(state.info.date)],['Osaamisala',PARTS[state.path].name]];
+    info.forEach(([label,value])=>{doc.setFont('Metsa','bold');text(`${label}: `,10,0,4.7);y-=6.7;doc.setFont('Metsa','normal');text(value,10,48,4.7)});y+=4;
+    heading('Tutkinnon osien arvosanat',13);
+    ensure(11);doc.setFont('Metsa','bold');doc.setFontSize(8);doc.setTextColor(74,89,104);doc.text('TUTKINNON OSA',margin,y);doc.text('LAAJUUS',174,y,{align:'right'});doc.text('ARVOSANA',194,y,{align:'right'});doc.setTextColor(20,42,67);y+=3;doc.setDrawColor(190);doc.line(margin,y,194,y);y+=5;
+    selectedParts().forEach(p=>{doc.setFont('Metsa','bold');doc.setFontSize(10);const nameLines=doc.splitTextToSize(p.name,contentWidth-52),height=Math.max(9,nameLines.length*4.8+4);ensure(height);doc.text(nameLines,margin,y);doc.setFont('Metsa','normal');doc.text(`${p.osp} osp`,174,y,{align:'right'});doc.setFont('Metsa','bold');doc.setFontSize(16);doc.text(String(state.finalGrades[p.id]),194,y+1,{align:'right'});doc.setFont('Metsa','normal');y+=height});
+    selectedParts().forEach(p=>{newPage();heading(p.name,15);doc.setTextColor(74,89,104);text(`${p.osp} osaamispistettä`,10);doc.setTextColor(20,42,67);criteriaFor(p.name).forEach((criterion,index)=>{const value=criterionValue(p,index,criterion),rows=doc.splitTextToSize(`${index+1}. ${criterion}`,contentWidth-43),valueRows=doc.splitTextToSize(String(value),36),height=Math.max(rows.length*4.6,valueRows.length*4.6);ensure(height+4);doc.setFontSize(9.5);doc.text(rows,margin,y);doc.setFont('Metsa','bold');doc.text(valueRows,194,y,{align:'right'});doc.setFont('Metsa','normal');y+=height+3});y+=3;heading('Ammattitaidon osoittamistavat',11);text(demonstrationMethodFor(p.name),10);const note=(state.notes[p.id]||'').trim();if(note){y+=4;heading('Huomiot',11);text(note,10)}});
+    scalePdf();
+    newPage();heading('Allekirjoitukset',15);
+    const signatures=[['Oppilaitoksen edustaja',state.info.schoolName,'sigSchool','sigSchoolDate'],['Työelämän / oppilaitoksen edustaja',state.info.workName,'sigWork','sigWorkDate'],['Opiskelija','', 'sigStudent','sigStudentDate']];
+    signatures.forEach(([role,name,key,dateKey])=>{if(key==='sigStudent'){ensure(21);heading('Tiedoksianto arvioinninoikaisumenettelystä',11);text('Opiskelija on vahvistanut saaneensa tiedon osaamisen arvioinnin tarkistamista ja oikaisua koskevasta menettelystä sekä siihen liittyvistä määräajoista.',9.5,0,4.5);text('Lisätietoa: oph.fi/fi/koulutus-ja-tutkinnot/oikaisupyynto-arvioinnin-tarkistamista-koskevaan-paatokseen-ammatillisessa',8.5,0,4.1);y+=3}ensure(44);doc.setFont('Metsa','bold');text(role,11);doc.setFont('Metsa','normal');text(name||'____________________________',10);const signature=state.signatures[key];if(signature){try{doc.addImage(signature,'PNG',margin,y,70,18);y+=20}catch{y+=6}}else{y+=12}doc.setDrawColor(110);doc.line(margin,y,margin+80,y);y+=6;text(`Allekirjoituspäivä: ${dateLabel(state.signatures[dateKey]||state.info.date)}`,9);y+=5});
+    footer();return doc.output('blob');
+  };
+  const downloadReportPdf=()=>{const blob=createReportPdf(),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=reportFileName();document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);return blob};
+  $('#saveReport').onclick=()=>{if(!requireFinalGrades())return;try{downloadReportPdf();toast('PDF-raportti tallennettiin laitteelle.')}catch(e){toast('PDF-raportin luonti ei onnistunut.')}};
+  $('#shareReport').onclick=async()=>{if(!requireFinalGrades())return;try{const blob=createReportPdf(),file=new File([blob],reportFileName(),{type:'application/pdf'});if(navigator.canShare?.({files:[file]})){await navigator.share({title:'Näyttöarviointiraportti',files:[file]});return}const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=file.name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Tämä selain ei tue PDF:n suoraa jakoa. PDF tallennettiin Lataukset-kansioon.')}catch(e){if(e?.name!=='AbortError')toast('PDF-raportin jako ei onnistunut.')}};
+  $('#shareApp').onclick=async()=>{try{if(navigator.share)await navigator.share({title:'Metsäalan PT – Näytön arviointi',url:location.href});else{await navigator.clipboard.writeText(location.href);toast('Sovelluksen linkki kopioitiin leikepöydälle.')}}catch(e){}};$('#clearAll').onclick=()=>{if(confirm('Päätetäänkö näyttö ja poistetaanko kaikki tällä laitteella tallennetut tiedot?')){localStorage.removeItem('metsaalan-pt-v1');state=blank();loadInputs();show(1);toast('Näytön tiedot poistettiin.')}};loadInputs();
+  </script>
+  <script>
+    const renderReportBase=renderReport;
+    renderReport=()=>{
+      renderReportBase();
+      const studentSignature=$('#sigStudent').closest('.signature');
+      if(!$('#reviewProcedureAcknowledged')){
+        studentSignature.querySelector('span').insertAdjacentHTML('afterend','<div class="assessment-acknowledgement"><label for="reviewProcedureAcknowledged"><input id="reviewProcedureAcknowledged" type="checkbox" aria-describedby="reviewProcedureLink">Olen saanut tiedon osaamisen arvioinnin tarkistamista ja oikaisua koskevasta menettelystä sekä siihen liittyvistä määräajoista.</label><a id="reviewProcedureLink" href="https://www.oph.fi/fi/koulutus-ja-tutkinnot/oikaisupyynto-arvioinnin-tarkistamista-koskevaan-paatokseen-ammatillisessa" target="_blank" rel="noopener noreferrer">Lisätietoa Opetushallituksen sivulla</a></div>');
+      }
+      const acknowledgement=$('#reviewProcedureAcknowledged');
+      acknowledgement.checked=Boolean(state.reviewProcedureAcknowledged);
+      acknowledgement.onchange=()=>{state.reviewProcedureAcknowledged=acknowledgement.checked;save()};
+    };
+    const startActions=document.querySelector('#screen1 .actions');
+    startActions.insertAdjacentHTML('beforeend','<div class="start-actions"><button class="secondary" id="shareAppStart" type="button">↗ Jaa sovellus</button><button class="secondary" id="installAppStart" type="button">↓ Asenna sovellus</button><button class="primary" type="button" data-next="2">Jatka tutkinnon osiin →</button></div>');
+    startActions.querySelector('[data-next]').remove();
+    document.getElementById('shareAppStart').onclick=()=>document.getElementById('shareApp').click();
+    startActions.querySelector('.start-actions [data-next]').onclick=()=>{captureInputs();show(2)};
+    let installPrompt;
+    const installButton=document.getElementById('installAppStart');
+    window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();installPrompt=event;installButton.textContent='↓ Asenna sovellus'});
+    window.addEventListener('appinstalled',()=>{installPrompt=null;installButton.textContent='Sovellus asennettu';toast('Sovellus on asennettu laitteelle.')});
+    installButton.onclick=async()=>{if(!installPrompt){toast('Avaa sovellus Chromessa tai Samsung Internetissä ja valitse valikosta Asenna sovellus / Lisää aloitusnäyttöön.');return}installPrompt.prompt();await installPrompt.userChoice;installPrompt=null};
+    const removeCriterionBullets=()=>document.querySelectorAll('.criterion .bullet').forEach(bullet=>bullet.remove());
+    new MutationObserver(removeCriterionBullets).observe(document.getElementById('evaluationContent'),{childList:true,subtree:true});
+    function openMobileModulePanel(){
+      let panel=document.getElementById('mobileModulePanel');
+      if(!panel){
+        document.body.insertAdjacentHTML('beforeend','<div class="mobile-module-panel" id="mobileModulePanel"><section class="mobile-module-sheet" role="dialog" aria-modal="true" aria-label="Valitut tutkinnon osat"><header><h2>Valitut tutkinnon osat</h2><button class="mobile-module-close" id="mobileModuleClose" type="button">Sulje</button></header><div id="mobileModuleItems"></div></section></div>');
+        panel=document.getElementById('mobileModulePanel');
+        document.getElementById('mobileModuleClose').onclick=()=>panel.classList.remove('open');
+        panel.onclick=event=>{if(event.target===panel)panel.classList.remove('open')};
+      }
+      const items=selectedParts();
+      document.getElementById('mobileModuleItems').innerHTML=items.map((part,index)=>{const total=criteriaFor(part.name).length,done=assessedCount(part);return `<button class="mobile-module-choice ${index===state.active?'active':''}" data-mobile-module="${index}" type="button"><span>${escapeHtml(part.name)}</span><small>${done}/${total}</small></button>`}).join('');
+      document.querySelectorAll('[data-mobile-module]').forEach(button=>button.onclick=()=>{state.active=+button.dataset.mobileModule;save();panel.classList.remove('open');renderEvaluation()});
+      panel.classList.add('open');
+    }
+    document.addEventListener('click',event=>{if(event.target.id==='mobileModules'){event.preventDefault();event.stopImmediatePropagation();openMobileModulePanel()}},true);
+    if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('service-worker.js').catch(()=>{}));}
+  </script>
+</body>
+</html>
+
